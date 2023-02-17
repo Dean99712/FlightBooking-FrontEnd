@@ -1,40 +1,89 @@
+//Variables
+$base-font-color: #21313f;
 
-.passengers-container {
+.offers-card-container {
+  width: 100%;
+  padding: 5px;
+  transition: all linear 0.2ms;
+  color: $base-font-color;
+  & p {
+    margin: 0;
+  }
+
+  &:hover {
+    border: 2px solid #27939f;
+    cursor: pointer;
+  }
+}
+
+.slice-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.to {
+  font-weight: 900;
+}
+
+.offer-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  justify-content: space-around;
+
+}
+
+.carrier-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 }
-  .duration-title {
-    display: flex;
-  }
-  .duration-container {
-    align-self: start;
 
-  .loading {
-    position: relative;
-    top: 2em;
-    background: #27939f;
-    text-align: center;
-    font-size: 20em;
-  }
-  .list {
-    display: flex;
-    flex-flow: column;
+.duration {
+  align-self: flex-start;
+  font-size: 12px;
+}
+
+.carrier-logo {
+  width: 100px;
+  height: 100px;
+}
+
+.time {
+  font-family: Rubik, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.location-city_name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.select-offer-btn {
+  align-self: center;
+  justify-self: end;
+}
+
+.offer-select-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2em;
+
+  & button {
+    font-weight: 500;
+    align-self: end;
+    padding: 0.3em 4em;
   }
 }
-  .time {
-    font-weight: 700;
-    font-size: 18px;
-    padding-bottom: 0.6em ;
-
+.amountAndCabinClass {
+  & p {
+    text-align: right;
+    margin: 0;
   }
-  .city-title {
-
+  & button {
+    margin-top: 10px;
   }
-
-  .duration {
-    //display: flex;
-    //flex-direction: column;
-    //padding: 4px;
-    //background: #27939f;
-  }
+}

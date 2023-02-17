@@ -1,5 +1,7 @@
-$base-color: #27939f;
-$header-height: 75px;
+$variant-color: #5BAEBC;
+$base-color: #7AC1D3;
+$secondary-color: #B5E1E4;
+$header-height: 100px;
 
 .header-container {
   display: flex;
@@ -11,32 +13,64 @@ $header-height: 75px;
   justify-content: space-between;
   padding: 1em 3em;
   font-weight: lighter;
-  box-shadow: 0 0 1em 1px #D5D5D57A;
   z-index: 5;
 
+  .logo {
+    height: 100px;
+    width: 100px;
+  }
   //Middle Titles
   .header-middle-titles {
     display: flex;
-    gap: 6em;
+    align-items: center;
     justify-content: center;
-    align-content: end;
+    border-radius: 50px;
 
     .header-middle-title {
       font-size: 24px;
-      font-weight: 400;
-      border-left: 2px #d5d5d5 solid;
-      padding: 0 1em;
+      color: #475869;
+      //background-color: #4078AB;
+      background: rgba(231, 244, 255, 0.65);
+      //color: #FFFFFF;
       text-align: center;
-      &:nth-last-child(3) {
-        border: none;
+      font-weight: 400;
+      border: none;
+      padding: 0.3em 2em;
+      flex: 1;
+      width: 100%;
+      transition: all linear 0.3s;
+
+      &.left {
+        border-radius: 50px 0 0 50px;
+        border-right: 1px solid rgba(206, 206, 206, 0.1);
+
+        &:hover {
+          border-right: 1px solid rgba(206, 206, 206, 0.1);
+        }
+      }
+
+      &.right {
+        border-radius: 0 50px 50px 0;
+        border-left: 1px solid rgba(206, 206, 206, 0.1);
+
+        &:hover {
+          border-left: 1px solid #FFFFFF
+        }
+
+        .middle:hover {
+          border: none;
+        }
       }
 
       &:hover {
-        color: $base-color;
-        cursor: pointer;;
+        cursor: pointer;
+        background: rgba(217, 225, 227, 0.5);
+        color: #475869;
+
       }
     }
-  }
+}
+
 }
 
 .btn-login {
@@ -44,4 +78,14 @@ $header-height: 75px;
   padding: 10px 2em;
   background: $base-color;
   color: #FFFFFF;
+  font-weight: 600;
+  line-height: 1.5;
+  text-underline: none;
+  transition: all linear 100ms;
+  border-radius: 20px;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 2px 0 #d5d5d5;
+  }
 }

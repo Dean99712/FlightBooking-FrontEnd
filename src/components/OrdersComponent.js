@@ -10,7 +10,6 @@ const OrdersComponent = () => {
     useEffect(() => {
 
     return () => {
-
         OffersService.getAllOffers()
             .then(response => {
                 setUsers(response.data);

@@ -1,0 +1,30 @@
+.card-skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1256px;
+  height: 150px;
+  padding: 1em;
+  margin: 0.5em;
+  box-shadow: 0 0 0.5em 0 #d5d5d5;
+}
+
+.card-skeleton-container {
+  display: flex;
+  flex-grow: 1;
+  gap: 2em;
+}
+
+.destination-container {
+  display: inline-flex;
+  justify-content: center;
+  & p {
+    align-self: center;
+  }
+}
+.checkout-container {
+  //display: inline-flex;
+  text-align: left;
+}
+.button {
+  align-self: end;
+}

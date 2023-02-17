@@ -1,0 +1,132 @@
+$variant-color: #5BAEBC;
+//$base-color: #7AC1D3;
+$line-color: #dcdcdc;
+
+$base-color: #4078AB;
+$secondary-color: #B5E1E4;
+$secondaryVariant-color: #ECAA44;
+
+
+.flights-container--all {
+  top: 30px;
+  position: relative;
+  height: 200vh;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.offers-container {
+  width: 95vw;
+  height: 80vh;
+  position: sticky;
+  background: url("../assets/images/flightsoffers/TerminalBackground.png") center center ;
+  display: flex;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+
+  .offer-filter-container {
+    position: absolute;
+    width: 75em;
+    align-self: stretch;
+    top: 20em;
+    justify-self: end;
+    padding: 2em;
+    background: #f8f8f8;
+    border-radius: 10px;
+  }
+
+  .container {
+    position: absolute;
+    top: 25em;
+    padding: 2em;
+    background: #f8f8f8;
+    align-self: end;
+    overflow: auto;
+    border-radius: 50px;
+    box-shadow: 0 2px 5px $line-color;
+  }
+}
+
+.offers {
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+
+  & p {
+    margin: 0;
+  }
+}
+.items {
+  width: calc(100% / 5);
+  justify-content: center;
+  .slice-day {
+    font-size: 18px;
+    font-weight:400;
+    color: rgba(33, 49, 63, 0.5);
+  }
+  .slice-time {
+    margin-bottom: 10px;;
+    font-weight: 800;
+    font-size: 20px;
+
+    & span {
+      color: rgba(33, 49, 63, 0.5);
+    }
+  }
+  & a {
+    font-size: 12px;
+    color: $base-color;
+    text-decoration: none;
+  }
+
+  &.offer-select {
+    text-align: right;
+    border-left: 1px dashed $line-color;
+    letter-spacing: 2px;
+    h6 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}
+.flight-owner-details {
+  border-right: 1px solid #e3e3e3;
+}
+
+
+.slice-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.slice-subtitle {
+  font-size: 14px;
+}
+
+.show-fare-option {
+  height: 300px;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $line-color;
+}
+.hidden {
+  display: none ;
+}
+.button-viewDeals {
+  background: #ECAA44;
+  padding: 0.5em 2em;
+  border-radius: 10px;
+  outline: none;
+  border:none;
+  color: #FFFFFF;
+  transition: all 300ms linear;
+
+  &:hover {
+    color: #ECAA44;
+    background: #FFFFFF;
+    outline: 2px solid #ECAA44;
+  }
+}

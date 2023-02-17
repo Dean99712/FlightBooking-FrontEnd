@@ -1,30 +1,59 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/OfferCard.scss'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircle, faPlane} from "@fortawesome/free-solid-svg-icons";
 import Card from "./Card";
+import {useNavigate} from "react-router-dom";
+import {end, parse} from "iso8601-duration";
+import {duration} from "moment";
+import SeatMapsModal from "./extras/SeatMapModal";
+import {refType} from "@mui/utils";
 
 const OfferCard = (props) => {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const navigate = useNavigate()
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const [slices, setSlices] = useState([])
     const [passengers, setPassengers] = useState([])
     const [segments, setSegments] = useState([])
-    // const [segmentPassengers, setSegmentPassengers] = useState([])
+    const [segmentPassengers, setSegmentPassengers] = useState([])
 
-    const convertDate = (date) => {
-        return new Date(date).toLocaleTimeString('en', {timeStyle: "short", hour12: false, timeZone: "UTC"});
-    }
+    let [days, setDays] = useState('')
+    let [hours, setHours] = useState('')
+    let [minutes, setMinutes] = useState('')
 
-    const convertDuration = (date = toString()) => {
-        const hours = date.slice(2, (date.length - 3))
-        // const minutes = date
-        const minutes = date.slice((date.length - 3))
-        date = (`${hours} ${minutes}`).toLowerCase()
-        console.log(date)
-        return date
+    const convertToFullDate = date => {
+        const time = new Date(date)
+        const year = time.getFullYear()
+        const month = time.toLocaleString('en-US', {month: "short"})
+        const days = time.toLocaleString('en-US', {day: "2-digit"})
+        return [month, days, year].join(' ');
     };
 
+    const convertDate = date => {
+        return new Date(date).toLocaleTimeString('he-IL', {timeStyle: "short", hour12: false, timeZone: "UTC",});
+    };
+
+    const convertCurrency = amount => {
+        const us = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return us.format(amount)
+    };
+
+    const convertDuration = (date) => {
+
+        // const days = moment.duration(date).days()
+        // const hours = moment.duration(date).hours()
+        // const minutes = moment.duration(date).minutes()
+
+        days = end(parse(date)).getUTCDay()
+        hours = end(parse(date)).getUTCHours()
+        minutes = end(parse(date)).getUTCMinutes()
+        let time = {days, hours, minutes};
+        const newTime = duration(time)
+    };
 
     useEffect(() => {
 
@@ -51,27 +80,11 @@ const OfferCard = (props) => {
             })
             setSlices(transferredSlices)
             setPassengers(transferredPassengers)
-            setIsLoading(false)
         };
 
         fetchedDataHandler();
 
     }, []);
-
-    // const fetchedSegmentPassengerHandler = () => {
-    //
-    //     segments.map(segment => {
-    //         const transferredSegmentPassengers = segment.passengers.map(passenger => {
-    //             return {
-    //                 passenger_id: passenger.passenger_id,
-    //                 cabin_class: passenger.cabin_class,
-    //                 cabin_class_marketing_name: passenger.cabin_class_marketing_name,
-    //                 fare_basis_code: passenger.fare_basis_code
-    //             }
-    //         })
-    //     setSegmentPassengers(transferredSegmentPassengers)
-    //     })
-    // }
 
     useEffect(() => {
         const fetchedSegmentsHandler = () => {
@@ -89,72 +102,88 @@ const OfferCard = (props) => {
                         duration: segment.duration,
                         origin_terminal: segment.origin_terminal,
                         passengers: segment.passengers,
-                        stops: segment.stops,
+                        fare_brand_name: segment.fare_brand_name,
+                        stops: segment.stops
                     }
                 })
-                setSegments(transferredSegments)
+                return setSegments(transferredSegments);
             })
-            return true
         }
-
         fetchedSegmentsHandler()
     }, [])
 
+    useEffect(() => {
 
-    const selectOffer = (id) => {
-        console.log(id)
+        const segmentPassengersHandler = () => {
+
+            props.slices.map(slice => {
+                slice.segments.map(segment => {
+                    const transferredSegmentPassengers = segment.passengers.map(passenger => {
+                        return {
+                            cabin_class: passenger.cabin_class,
+                            cabinClassMarketingName: passenger.cabin_class_marketing_name,
+                            passenger_id: passenger.passenger_id
+                        }
+                    });
+                    return setSegmentPassengers(transferredSegmentPassengers)
+                })
+                return true
+            })
+        }
+        segmentPassengersHandler()
+    }, []);
+
+    const getFirstDepartureDate = (segments = []) => {
+        const [{departing_at}] = segments
+        return convertDate(departing_at)
+    }
+    const getLastArrivalDate = (array = []) => {
+        let arriving_at = array[array.length - 1].arriving_at
+        return convertDate(arriving_at)
+    };
+
+    const navigateToPassengersDetails = (id) => {
+        return navigate(`/passengers`, {state: {id, passengers}})
     }
 
-    console.log(segments)
-
     return (
-
         <div>
-            <Card>
-                <div className="origin-title">
-                    {slices.map(slice => (
-                        <div>
-                            {segments.map(segment => (
-                                <div className="time">{convertDate(segment.arriving_at)}</div>
-                            ))}
-                            <p className="city-title">{slice.origin.city_name}</p>
-                            <p className="iata-title">{slice.origin.iata_code}</p>
-                        </div>
-                    ))}
-                </div>
-                <div className="duration-title">
-                    {segments.map(segment => (
-                        <div className="duration-container" style={{borderBottom: "1px #27939f solid"}}>
-                            <FontAwesomeIcon style={{color: "#27939f"}} icon={faPlane}/>
-                            <div className="duration"><p>{convertDuration(segment.duration)}</p></div>
-                            <p>{segment.stops}</p>
-                            <FontAwesomeIcon icon={faCircle}/>
-                        </div>
-                    ))}
-                </div>
-                <div className="destination-title">
-                    {slices.map(slice => (
-                        <div>
-                            {segments.map(segment => (
-                                <div className="time">{convertDate(segment.departing_at)}</div>
-                            ))}
-                            <p className="city-title">{slice.destination.city_name}</p>
-                            <p className="iata-title">{slice.destination.iata_code}</p>
-                        </div>
-                    ))}
-                </div>
-                <div className="cabin_class-container">
-                    {segments.map(segment => (
-                        <div className="passengers-container">
-                            {segment.passengers.map(passenger => (
-                                <div>{passenger.cabin_class_marketing_name}</div>
-                            ))}<span className="fw-bold">From</span>
-                            <p className="fw-semibold">{props.totalAmount}<span> {props.baseCurrency}</span></p>
-                        </div>
-                    ))}
-                </div>
-                <button className="btn btn-dark text-white" onClick={() => selectOffer(props.id)}>Select offer</button>
-            </Card>
+            <div>
+                {slices.map((slice) => (
+                    <div className='FromAndTo'>
+                        <Card key={slice.id} className="offer-card-container">
+                            <p>{props.id}</p>
+                            <div>
+                                <div className="time">{getFirstDepartureDate(segments)}</div>
+                                <p className="slice-title">{slice.origin.city_name}</p>
+                                <p className="slice-title">{slice.origin.iata_code}</p>
+                            </div>
+                            <div>
+                                <div>
+                                    <p>{convertDuration(slice.duration)}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="time">{getLastArrivalDate(segments)}</div>
+                                <p className="slice-title">{slice.destination.city_name}</p>
+                                <p className="slice-title">{slice.destination.iata_code}</p>
+                            </div>
+                            <div className="offer-select-container">
+                                <div className="amountAndCabinClass">
+                                    <p className="slice-title">{slice.fare_brand_name}</p>
+                                    <p className="slice-title">From</p>
+                                    <p className="slice-title">{convertCurrency(props.totalAmount)}</p>
+                                    <button className="btn btn-dark text-white"
+                                            onClick={() => navigateToPassengersDetails(props.id)}>Select
+                                        Offer
+                                    </button>
+                                </div>
+
+                            </div>
+                        </Card>
+                    </div>
+                ))
+                }</div>
         </div>
     );
 };
