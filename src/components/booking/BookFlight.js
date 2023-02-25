@@ -24,6 +24,7 @@ const BookFlight = () => {
     const [options, setOptions] = useState({
         adult: 1,
         child: 0,
+        infant_without_seat: 0
     });
 
     const handelOption = (name, operation) => {

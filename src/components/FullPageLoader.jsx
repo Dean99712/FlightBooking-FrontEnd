@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Spinner} from "react-bootstrap";
-import "../styles/FullPageLoader.scss"
+import "../styles/FullPageLoader.css"
 
 class FullPageLoader extends Component {
     render() {

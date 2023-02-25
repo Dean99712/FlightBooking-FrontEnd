@@ -62,22 +62,22 @@ const PassengersOptionsComponent = (props) => {
                         icon={faPlus}/></button>
                 </div>
                 {/* Options menu Baby*/}
-                {/*<div className="options-item">*/}
-                {/*    <button type={"button"} disabled={props.options.infant_without_seat <= 0}*/}
-                {/*            className="option-counter-button"*/}
-                {/*            onClick={() => props.onRemovePassenger("infant_without_seat")}*/}
-                {/*    ><FontAwesomeIcon*/}
-                {/*        icon={faMinus}/></button>*/}
-                {/*    <span className="option-counter-number">{props.options.infant_without_seat}</span>*/}
-                {/*    <div className="option-text">Baby</div>*/}
-                {/*    <div className="option-display-age">under 2 years</div>*/}
-                {/*    <button type={"button"}*/}
-                {/*            disabled={props.options.infant_without_seat >= props.options.adult || props.options.infant_without_seat === props.options.adult}*/}
-                {/*            className="option-counter-button"*/}
-                {/*            onClick={() => props.onAddPassenger("infant_without_seat")}>*/}
-                {/*        <FontAwesomeIcon*/}
-                {/*            icon={faPlus}/></button>*/}
-                {/*</div>*/}
+                <div className="options-item">
+                    <button type={"button"} disabled={props.options.infant_without_seat <= 0}
+                            className="option-counter-button"
+                            onClick={() => props.onRemovePassenger("infant_without_seat")}
+                    ><FontAwesomeIcon
+                        icon={faMinus}/></button>
+                    <span className="option-counter-number">{props.options.infant_without_seat}</span>
+                    <div className="option-text">Baby</div>
+                    <div className="option-display-age">under 2 years</div>
+                    <button type={"button"}
+                            disabled={props.options.infant_without_seat >= props.options.adult || props.options.infant_without_seat === props.options.adult}
+                            className="option-counter-button"
+                            onClick={() => props.onAddPassenger("infant_without_seat")}>
+                        <FontAwesomeIcon
+                            icon={faPlus}/></button>
+                </div>
             </div>
         </div>
     );
